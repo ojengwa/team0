@@ -1,0 +1,61 @@
+<html>
+	<head>
+		<title>PDFViewer Page</title>
+		<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+	</head>
+
+	<body>
+		<h1>Enter your URL to download the pdf file</h1>
+		<form id="submitpdf" action="#">
+			<fieldset>
+				<legend>Enter the input details to download the pdf file</legend>
+				<input type="text" name="url" placeholder="URL of html file"><br>
+				<input type="text" name="filename" placeholder="Name of pdf file"><br>
+				<input type="submit" name="submit" value="submit">
+			</fieldset>
+		</form>
+
+		<div id="result"></div>
+ 
+		<script>
+		// Attach a submit handler to the form
+		$( "#submitpdf" ).submit(function( event ) {
+ 
+  			// Stop form from submitting normally
+  			event.preventDefault();
+ 
+  			// Get some values from elements on the page:
+  			var form = $(this);
+  			var data = {}
+  			for (var i = 0; i < form.lenght; ++i){
+  				var input = form[i];
+  				if (input.name){
+  					data[input.name] = input.value;
+  				}
+  			}
+  			addData()
+    	}
+
+    	function addData(){
+    		$.ajax({
+    			type: "POST",
+    			url: "http://example.com",
+    			data: JSON.stringify(data),
+    			contentType: "application/json; charset=utf-8",
+             	crossDomain: true,
+             	dataType: "json",
+             	success: function (data, status, jqXHR) {
+
+                 alert(success);
+             },
+
+             error: function (jqXHR, status) {
+                // error handler
+                console.log(jqXHR);
+                alert('fail' + status.code);
+            }
+    		})
+    	});
+</script>
+</body>
+</html>
