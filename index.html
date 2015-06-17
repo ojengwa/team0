@@ -2,24 +2,44 @@
 	<head>
 		<title>PDFViewer Page</title>
 		<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+		<!--<link href="css/button_css.css" rel="stylesheet">-->
+		<style>
+			#main_control {
+				margin-top:20%;
+			}
+		</style>
 	</head>
 
 	<body>
-		<h1>Enter your URL to download the pdf file</h1>
-		<form id="submitpdf" action="#">
-			<fieldset>
-				<legend>Enter the input details to download the pdf file</legend>
-				<input type="text" name="url" placeholder="URL of html file"><br>
-				<input type="text" name="filename" placeholder="Name of pdf file"><br>
-				<input type="submit" name="submit" value="submit">
-			</fieldset>
-		</form>
-
+		<div class="container">
+      		<div class="header clearfix">
+        		<nav>
+          			<ul class="nav nav-pills pull-right">
+            			<li role="presentation" class="active"><a href="index.html">Home</a></li>
+            			<li role="presentation"><a href="login.html">Login</a></li>
+            			<li role="presentation"><a href="#">Contact</a></li>
+          			</ul>
+        		</nav>
+        		<h3 class="text-muted">Enter your URL to download the pdf file</h3>
+        	</div>
+        	<div class="jumbotron" id="main_control">
+        		<h3>Enter the website you want to download the pdf file</h3>
+        		<div class="input-group">
+      				<input type="text" class="form-control" placeholder="Enter URL to download its pdf" id="urltext">
+      				<span class="input-group-btn">
+        				<button class="btn btn-default" type="button" id="submitpdf">GO!</button>
+      				</span>
+    			</div>
+        		<!--<p><a class="btn btn-lg btn-success" href="#" role="button">Sign up today</a></p>-->
+      		</div>
 		<div id="result"></div>
  
 		<script>
 		// Attach a submit handler to the form
-		$( "#submitpdf" ).submit(function( event ) {
+		$( "#submitpdf" ).click(function( event ) {
  
   			// Stop form from submitting normally
   			event.preventDefault();
@@ -27,14 +47,9 @@
   			// Get some values from elements on the page:
   			var form = $(this);
   			var data = {}
-  			for (var i = 0; i < form.lenght; ++i){
-  				var input = form[i];
-  				if (input.name){
-  					data[input.name] = input.value;
-  				}
-  			}
+  			data["pageurl"] = $("#urltext").value
   			addData()
-    	}
+    	});
 
     	function addData(){
     		$.ajax({
@@ -54,8 +69,8 @@
                 console.log(jqXHR);
                 alert('fail' + status.code);
             }
-    		})
-    	});
+    		});
+    	}
 </script>
 </body>
 </html>
