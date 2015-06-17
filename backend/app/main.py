@@ -9,6 +9,11 @@ from app import db
 from models import ConversionRequest, PDFFile
 
 
+@app.route('/')
+def it_works():
+    return 'it works!'
+
+
 @app.route('/v1/files', methods=['GET', 'POST'])
 def files():
     if request.method == 'GET':
