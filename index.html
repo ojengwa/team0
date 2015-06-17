@@ -1,81 +1,49 @@
 <html>
-	<head>
-		<title>PDFViewer Page</title>
-		<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-		<script src="js/pdf_print.js"></script>
-		<style>
-			#main_control {
-				margin-top:20%;
-			}
-		</style>
-	</head>
+    <head>
+        <title>PDFViewer Page</title>
+        <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+        <script src = "https://plus.google.com/js/client:platform.js" async defer></script>
+        <script src="js/pdf_print.js"></script>
+        <style>
+            #main_control {
+                margin-top:20%;
+            }
+        </style>
+    </head>
 
-	<body>
-		<div class="container">
-      		<div class="header clearfix">
-        		<nav>
-          			<ul class="nav nav-pills pull-right">
-            			<li role="presentation" class="active"><a href="index.html">Home</a></li>
-            			<li role="presentation"><a href="login.html">Login</a></li>
-            			<li role="presentation"><a href="#">Contact</a></li>
-          			</ul>
-        		</nav>
-        		<h3 class="text-muted">Enter your URL to download the pdf file</h3>
-        	</div>
-        	<div class="jumbotron" id="main_control">
-        		<h3>Enter the website you want to download the pdf file</h3>
-        		<div class="input-group">
-      				<input type="text" class="form-control" placeholder="Enter URL to download its pdf" id="urltext">
-      				<span class="input-group-btn">
-        				<button class="btn btn-default" type="button" id="submitpdf">GO!</button>
-      				</span>
-    			</div>
-        		<!--<p><a class="btn btn-lg btn-success" href="#" role="button">Sign up today</a></p>-->
-      		</div>
-		<div id="result"></div>
- 
-		<script>
-			// Attach a submit handler to the form
-			$( "#submitpdf" ).click(function( event ) {
- 
-  				// Stop form from submitting normally
-	  			event.preventDefault();
- 	
-  				// Get some values from elements on the page:
-  				// var form = $(this);
-  				var data = {}
-	  			data["url"] = $("#urltext").value
-  				addData()
-  				postData()
-	    	});
-
-    		function addData(){
-    			$.ajax({
-    				type: "POST",
-    				url: "http://example.com",
-	    			data: JSON.stringify(data),
-    				contentType: "application/json; charset=utf-8",
-        	     	crossDomain: true,
-            	 	dataType: "json",
-             		success: function (result) {
-						switch (result) {
-	                		case true:
-    	                		processResponse(result);
-        	            		break;
-            	    		default:
-                	    		alert('failed');
-            			}
-	             	},
-    			});
-    		}
-    		function processResponse(data){
-    			var pdf_data = JSON.parse(response);
-    			var pdf_file = pdf_data.url
-    			loading(pdf_file)
-    		}
-		</script>
-	</body>
+    <body>
+        <div class="container">
+              <div class="header clearfix">
+                <nav>
+                      <ul class="nav nav-pills pull-right">
+                        <li role="presentation" class="active"><a href="index.html">Home</a></li>
+                        <li role="presentation"><a href="#">Contact</a></li>
+                      </ul>
+                </nav>
+                <h3 class="text-muted">Enter your URL to download the pdf file</h3>
+            </div>
+            <div class="jumbotron" id="main_control">
+                <h3>Enter the website you want to download the pdf file</h3>
+                <div class="input-group">
+                      <input type="text" class="form-control" placeholder="Enter URL to download its pdf" id="urltext">
+                      <span class="input-group-btn">
+                        <button class="btn btn-default" type="button" id="submitpdf">GO!</button>
+                      </span>
+                </div>
+                <p><div id="gConnect" class="button">
+                    <button class="g-signin"
+                      data-scope="email"
+                      data-clientid="841077041629.apps.googleusercontent.com"
+                      data-callback="onSignInCallback"
+                      data-theme="dark"
+                      data-cookiepolicy="single_host_origin">
+                    </button>
+                </div></p>
+                <!--<p><a class="btn btn-lg btn-success" href="#" role="button">Sign up today</a></p>-->
+              </div>
+        <div id="result"></div>
+    </body>
 </html>
