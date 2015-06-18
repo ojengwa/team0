@@ -4,20 +4,18 @@ from httplib2 import Http
 from app import db
 
 
-class User(db.Document):
-    id = db.ObjectIdField(required=True)
-
-
 class PDFFile(db.Document):
     id = db.ObjectIdField(required=True)
+    html_url = db.URLField()
     url = db.URLField()
     content = db.FileField(required=True)
-    owner = db.ObjectIdField()
+    owner = db.EmailField()
     created_at = db.DateTimeField(default=datetime.now, required=True)
 
 
 class ConversionRequest(db.Document):
-    user_id = db.ObjectIdField()
+    id = db.ObjectIdField(required=True)
+    user_id = db.EmailField()
     url = db.URLField(required=True)
     created_at = db.DateTimeField(default=datetime.now, required=True)
 
@@ -27,3 +25,8 @@ class ConversionRequest(db.Document):
         (head, _) = (Http()).request(self.url, 'HEAD')
         if head.status >= 400:
             raise db.ValidationError('ValidationError', errors={'url': str(self.url) + ' is unreachable (status = ' + str(head.status) + ')'})
+
+
+class SearchRequest(db.Document):
+    owner = db.EmailField()
+    date_range = db.ListField(db.DateTimeField)
