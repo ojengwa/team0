@@ -1,0 +1,40 @@
+body {
+    font-family: Montserrat, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.http {
+    font-size: 18px;
+}
+
+.jumbotron {
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-top: 10%;
+    background-color: transparent;
+}
+
+.form-control,
+.btn,
+.btn-lg,
+.input-lg {
+    border-radius: 0;
+}
+
+.btn-primary {
+    background-image: none;
+}
+
+.navbar-default {
+    border-radius: 0;
+    background-color: transparent;
+    border-color: transparent;
+    background-image: none;
+}
+
+.navbar-default .navbar-collapse {
+    border-color: transparent;
+}
+
+#userActions {
+    visibility: hidden;
+}

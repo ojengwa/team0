@@ -1,0 +1,53 @@
+<html>
+	<head>
+		<title>PDFViewer Page</title>
+		<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+		<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src = "https://plus.google.com/js/client:platform.js" async defer></script>
+		<style>
+			#main_control {
+				margin-top:20%;
+			}
+      #my-btn {
+        .button-variant(red; white; blue);
+      }
+      #mydiv {
+        position:fixed;
+        top: 50%;
+        left: 50%;
+        width:30em;
+        height:18em;
+        /*margin-top: -9em; set to a negative number 1/2 of your height
+        margin-left: -15em; /*set to a negative number 1/2 of your width*/
+      }
+		</style>
+	</head>
+
+	<body>
+		<div class="container">
+      		<div class="header clearfix">
+        		<nav>
+          			<ul class="nav nav-pills pull-right">
+            			<li role="presentation"><a href="index.html">Home</a></li>
+            			<li role="presentation" class="active"><a href="login.html">Login</a></li>
+            			<li role="presentation"><a href="#">Contact</a></li>
+          			</ul>
+        		</nav>
+        	</div>
+            <div id="mydiv">
+              <div id="gConnect" class="button">
+                <button class="g-signin"
+                  data-scope="email"
+                  data-clientid="841077041629.apps.googleusercontent.com"
+                  data-callback="onSignInCallback"
+                  data-theme="dark"
+                  data-cookiepolicy="single_host_origin">
+                </button>
+            </div>
+      </div>
+    <script src="http://getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"></script>
+  </body>
+</html>

@@ -1,0 +1,15 @@
+{
+    "name": "web2pdf",
+    "version": "0.0.1",
+    "description": "A node.js app to convert web pages to PDF files.",
+    "main": "index.js",
+    "scripts": {
+        "start": "node index.js"
+    },
+    "dependencies": {
+        "express": "~4.9.x"
+    },
+    "engines": {
+        "node": "0.12.2"
+    }
+}

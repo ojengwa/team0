@@ -1,0 +1,69 @@
+<html>
+  <head>
+    <title>Web2PDF: Convert web pages to PDF documents</title>
+    <meta name="google-signin-client_id" content="1029543985020-npv8fv6lo5kuoira7ck17bfuu5m0m8up.apps.googleusercontent.com">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="css/main.css">
+    <script>
+      var user = null;
+      function onGApiLoad() {
+          gapi.auth2.getAuthInstance().currentUser.listen(function (googleUser) {
+            user = googleUser;
+          });
+      }
+    </script>
+    <script src="https://apis.google.com/js/platform.js?onload=onGApiLoad"></script>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+          </button>
+          <a class="navbar-brand" href="#">Web2PDF</a>
+        </div>
+        <div class="collapse navbar-collapse" id="navbar-collapse">
+          <form id="signinForm" class="navbar-form navbar-right" role="login">
+            <div class="g-signin2" data-theme="dark" data-onsuccess="onSignIn"></div>
+          </form>
+          <div id="userActions">
+            <ul class="nav navbar-nav navbar-right">
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                  <span id="userEmail">ftchirou@gmail.com</span>
+                  <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                <li><a href="#">History</a></li>
+                <li><a id="signOutButton" href="#">Sign out</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <div class="container">
+      <div class="jumbotron">
+        <form>
+          <div id="urlForm" class="form-group">
+            <label class="sr-only" for="url">URL</label>
+            <label id="urlLabel" class="control-label" for="urlInputGroup"></label>
+            <div id="urlInputGroup" class="input-group">
+              <input type="text" class="form-control input-lg" id="url" placeholder="Enter a web page URL to get a PDF snapshot of it.">
+              <div class="input-group-btn">
+                <button class="btn btn-lg btn-primary" type="button" id="submit">Go!</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <script src="js/script.js"></script>
+  </body>
+</html>

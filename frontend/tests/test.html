@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>PDF Viewer using PDF.JS and HTML5</title>
+ 
+    <link rel="stylesheet" href="test.css"></link>
+ 
+    <!--<script src="test.js"></script>
+ 
+    <script src="lib/pdf.js"></script>
+    <script src="lib/fonts.js"></script>
+    <script src="lib/cffStandardStrings.js"></script>
+    <script src="lib/Encodings.js"></script>
+    <script src="lib/glyphlist.js"></script>-->
+    <script>
+      function load(filename) {
+        var url = "http://mozilla.github.io/pdf.js/web/viewer.html";
+        var add = "?file=".concat(encodeURIComponent(filename));
+        var res = encodeURIComponent(add);
+        var page = url.concat(add);
+
+        window.location.href=page;
+      }
+    </script>
+  </head>
+  <body onload="load('http://fzs.sve-mo.ba/sites/default/files/dokumenti-vijesti/sample.pdf')">
+    Page: <span id="pageNumber"></span> of <span id="numPages"></span>
+    <a href="javascript:prevPage()">Previous</a> |
+    <a href="javascript:nextPage()">Next</a>
+    <!-- Canvas dimensions must be specified in CSS pixels.  CSS pixels
+       are always 96 dpi.  816x1056 is 8.5x11in at 96dpi. -->
+    <!-- We're rendering here at 1x scale. -->
+    <canvas id="canvas" width="816" height="1056"></canvas> 
+  </body>
+</html>
