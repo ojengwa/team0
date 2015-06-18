@@ -6751,9 +6751,9 @@ function webViewerInitialized() {
     }
   }, true);
 
-  document.getElementById('homeButton', addEventListener('click', function () {
+  document.getElementById('homeButton').addEventListener('click', function () {
     window.location.href = '/';
-  }));
+  });
 
   document.getElementById('sidebarToggle').addEventListener('click',
     function() {
