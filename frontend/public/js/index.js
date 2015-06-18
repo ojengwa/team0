@@ -14,8 +14,13 @@ $(document).ready(function () {
       data.url = "http://" + data.url;
     }
 
-    if (user != null) {
-      data["user_id"] = user.getBasicProfile().getEmail();
+    // if (user != null) {
+    //   data["user_id"] = user.getBasicProfile().getEmail();
+    // }
+
+    var user_id = localStorage.getItem('user_id');
+    if (user !== null) {
+      data["user_id"] = user_id;
     }
 
     $.ajax({
@@ -52,7 +57,7 @@ $(document).ready(function () {
 
       $("#userEmail").text("");
 
-      user = null;
+      localStorage.removeItem("user_id");
     });
   });
 });
@@ -68,6 +73,8 @@ var onSignIn = function (user) {
   $("#userActions").css("visibility", "visible");
 
   $("#userEmail").text(profile.getEmail());
+
+  localStorage.setItem('user_id', profile.getEmail());
 };
 
 var clear = function () {

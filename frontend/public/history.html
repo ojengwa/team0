@@ -6,18 +6,10 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="css/main.css">
-    <!--<script>
-      var user = null;
-      function onGApiLoad() {
-          gapi.auth2.getAuthInstance().currentUser.listen(function (googleUser) {
-            user = googleUser;
-          });
-      }
-    </script>-->
-    <script src="js/globals.js"></script>
-    <script src="https://apis.google.com/js/platform.js?onload=onGApiLoad"></script>
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+    <script src="js/history.js"></script>
   </head>
   <body>
     <nav class="navbar navbar-default">
@@ -26,13 +18,10 @@
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
             <span class="sr-only">Toggle navigation</span>
           </button>
-          <a class="navbar-brand" href="#">Web2PDF</a>
+          <a class="navbar-brand" href="/">Web2PDF</a>
         </div>
         <div class="collapse navbar-collapse" id="navbar-collapse">
-          <form id="signinForm" class="navbar-form navbar-right" role="login">
-            <div class="g-signin2" data-theme="dark" data-onsuccess="onSignIn"></div>
-          </form>
-          <div id="userActions">
+          <div>
             <ul class="nav navbar-nav navbar-right">
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
@@ -40,7 +29,6 @@
                   <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu">
-                <li><a href="history.html">History</a></li>
                 <li><a id="signOutButton" href="#">Sign out</a></li>
                 </ul>
               </li>
@@ -50,21 +38,19 @@
       </div>
     </nav>
     <div class="container">
-      <div class="jumbotron">
-        <form>
-          <div id="urlForm" class="form-group">
-            <label class="sr-only" for="url">URL</label>
-            <label id="urlLabel" class="control-label" for="urlInputGroup"></label>
-            <div id="urlInputGroup" class="input-group">
-              <input type="text" class="form-control input-lg" id="url" placeholder="Enter a web page URL to get a PDF snapshot of it.">
-              <div class="input-group-btn">
-                <button class="btn btn-lg btn-primary" type="button" id="submit">Go!</button>
-              </div>
-            </div>
-          </div>
-        </form>
+      <div class="row">
+        <div class="col-md-12">
+          <h3>History</h3>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <hr>
+        </div>
+      </div>
+      <div id="history">
+      </div>
       </div>
     </div>
-    <script src="js/index.js"></script>
   </body>
 </html>

@@ -35,6 +35,27 @@ body {
     border-color: transparent;
 }
 
+.date {
+    margin-top: 20px;
+}
+
+.file {
+    padding-left: 30px;
+    margin-top: 10px;
+}
+
+#history {
+    margin-bottom: 50px;
+}
+
+#openPDFButton {
+    margin-right: 5px;
+}
+
+#downloadPDFButton {
+    margin-left: 5px;
+}
+
 #userActions {
     visibility: hidden;
 }
