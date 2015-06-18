@@ -1,100 +1,70 @@
 <html>
-    <head>
-        <title>PDFViewer Page</title>
-        <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-        <!--<script src = "https://plus.google.com/js/client:platform.js" async defer></script>-->
-        <script type="text/javascript">
-          (function() {
-            var po = document.createElement('script');
-            po.type = 'text/javascript'; po.async = true;
-            po.src = 'https://plus.google.com/js/client:plusone.js';
-            var s = document.getElementsByTagName('script')[0];
-            s.parentNode.insertBefore(po, s);
-          })();
-        </script>
-        <style>
-            #main_control {
-                margin-top:20%;
-            }
-        </style>
-    </head>
+  <head>
+    <title>Web2PDF: Convert web pages to PDF documents</title>
+    <meta name="google-signin-client_id" content="1029543985020-npv8fv6lo5kuoira7ck17bfuu5m0m8up.apps.googleusercontent.com">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="css/main.css">
 
-    <body>
-        <div class="container">
-              <div class="header clearfix">
-                <nav>
-                      <ul class="nav nav-pills pull-right">
-                        <li role="presentation" class="active"><a href="index.html">Home</a></li>
-                        <li role="presentation"><a href="#">Contact</a></li>
-                      </ul>
-                </nav>
-                <h3 class="text-muted">Enter your URL to download the pdf file</h3>
-            </div>
-            <div class="jumbotron" id="main_control">
-                <h3>Enter the website you want to download the pdf file</h3>
-                <div class="input-group">
-                      <input type="text" class="form-control" placeholder="Enter URL to download its pdf" id="urltext">
-                      <span class="input-group-btn">
-                        <button class="btn btn-default" type="button" id="submit">GO!</button>
-                      </span>
-                </div>
-                <p><div id="gConnect" class="button">
-                    <!-- <button class="g-signin"
-                      data-scope="https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/userinfo.email"
-                      data-requestvisibleactions="http://schemas.google.com/AddActivity"
-                      data-clientid="1029543985020-npv8fv6lo5kuoira7ck17bfuu5m0m8up.apps.googleusercontent.com"
-                      data-accesstype="offline"
-                      data-callback="onSignInCallback"
-                      data-theme="dark"
-                      data-cookiepolicy="single_host_origin">
-                    </button> -->
-                </div></p>
-                <!--<p><a class="btn btn-lg btn-success" href="#" role="button">Sign up today</a></p>-->
-              </div>
-        <div id="result"></div>
-
-        <script type="text/javascript">
-          var gpclass = (function(){
-    
-            //Defining Class Variables here
-            var response = undefined;
-            return {
-            //Class functions / Objects
-        
-            mycoddeSignIn:function(response){
-            // The user is signed in
-            if (response['access_token']) {
-              //Get User Info from Google Plus API
-              gapi.client.load('plus','v1',this.getUserInformation);  
-            } else if (response['error']) {
-                // There was an error, which means the user is not signed in.
-                alert('There was an error: ' + authResult['error']);
-            }
-          },
-        
-          // get user information
-          getUserInformation: function(){
-            var request = gapi.client.plus.people.get( {'userId' : 'me'} );
-            request.execute( function(profile) {
-                var email = profile['emails'].filter(function(v) {
-                    return v.type === 'account'; // Filter out the primary email
-                })[0].value;
-                var fName = profile.displayName;
-                // $("#inputFullname").val(fName);
-                // $("#inputEmail").val(email);
-            });
-          }
-    
-        }; //End of Return
-      })();
-    
-      function mycoddeSignIn(gpSignInResponse){
-        gpclass.mycoddeSignIn(gpSignInResponse);
+    <script>
+      var user = null;
+      function onGApiLoad() {
+          gapi.auth2.getAuthInstance().currentUser.listen(function (googleUser) {
+            user = googleUser;
+          });
       }
     </script>
-    <script src="js/pdf_print.js"></script>
-    </body>
+    <script src="https://apis.google.com/js/platform.js?onload=onGApiLoad"></script>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+          </button>
+          <a class="navbar-brand" href="#">Web2PDF</a>
+        </div>
+        <div class="collapse navbar-collapse" id="navbar-collapse">
+          <form id="signinForm" class="navbar-form navbar-right" role="login">
+            <div class="g-signin2" data-theme="dark" data-onsuccess="onSignIn"></div>
+          </form>
+          <div id="userActions">
+            <ul class="nav navbar-nav navbar-right">
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                  <span id="userEmail">ftchirou@gmail.com</span>
+                  <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                <li><a href="#">History</a></li>
+                <li><a id="signOutButton" href="#">Sign out</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <div class="container">
+      <div class="jumbotron">
+        <form>
+          <div id="urlForm" class="form-group">
+            <label class="sr-only" for="url">URL</label>
+            <label id="urlLabel" class="control-label" for="urlInputGroup"></label>
+            <div id="urlInputGroup" class="input-group">
+              <input type="text" class="form-control input-lg" id="url" placeholder="Enter a web page URL to get a PDF snapshot of it.">
+              <div class="input-group-btn">
+                <button class="btn btn-lg btn-primary" type="button" id="submit">Go!</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <script src="js/script.js"></script>
+  </body>
 </html>
