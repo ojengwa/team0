@@ -1,5 +1,5 @@
 from datetime import datetime, date
-from httplib2 import ServerNotFoundError
+from httplib2 import ServerNotFoundError, CertificateHostnameMismatch
 
 from flask import request, jsonify, url_for, make_response,json
 from pdfkit import from_url as pdf_from_url
@@ -32,12 +32,14 @@ def files():
     pdf.content.close()
     pdf.save()
 
-    pdf.url = url_for('get_file', id=pdf.id, _external=True)
+    processing_time = clock() - initial_time
 
-    final_time = clock() - initial_time
-
-    return jsonify(id=str(pdf.id), html_url=pdf.html_url, url=pdf.url, created_at=pdf.created_at.isoformat(), owner=pdf.owner,
-        final_time=str(final_time)), 201
+    return jsonify(id=str(pdf.id),
+                   html_url=pdf.html_url,
+                   url=url_for('get_file', id=pdf.id, _external=True),
+                   created_at=pdf.created_at.isoformat(),
+                   owner=pdf.owner,
+                   processing_time=str(processing_time)), 201
 
 
 @app.route('/v1/files/<id>', methods=['GET'])
@@ -48,32 +50,27 @@ def get_file(id):
 
 
 def get_files():
-    searchRequest = SearchRequest(owner=request.args.get('owner'), from_date=request.args.get('from_date'),
-        to_date=request.args.get('to_date'))
-    searchRequest.save()
+    user_id = request.args.get('owner')
+    from_date = request.args.get('from_date')
+    to_date = request.args.get('to_date')
 
-    history = []
-    user_name = searchRequest.owner
-    from_date = searchRequest.from_date
-    to_date = searchRequest.to_date
+    files = PDFFile.objects
 
-    if to_date is not None and from_date is not None:
-        for pdfFile in PDFFile.objects(owner=user_name):
-            if pdfFile.created_at.date >= from_date.date and pdfFile.created_at.date <= to_date.date:
-                history.append(pdfFile)
+    if user_id is not None:
+        files = files.filter(owner=user_id)
 
-    elif to_date is not None and from_date is not None and user_name is None:
-        for pdfFile in PDFFile.objects():
-            history.append(pdfFile)
+    if from_date is not None:
+        files = files.filter(created_at__gte=datetime.strptime(from_date, '%d/%m/%Y'))
 
-    else:
-        for pdfFile in PDFFile.objects(owner=user_name):
-            history.append(pdfFile)
+    if to_date is not None:
+        files = files.filter(created_at__lte=datetime.strptime(to_date, '%d/%m/%Y'))
 
-    if history:
-        return jsonify(pdfFile = history), 200
-    else:
-        return "It is working"
+    return jsonify(files=[{'id': str(file.id),
+                           'html_url': file.html_url,
+                           'url': url_for('get_file', id=file.id, _external=True),
+                           'created_at': file.created_at.isoformat(),
+                           'owner': file.owner} for file in files]), 200
+
 
 @app.errorhandler(db.ValidationError)
 def handle_validation_error(error):
@@ -92,6 +89,12 @@ def handle_server_not_found_error(error):
 def handle_does_not_exist(error):
     return jsonify(error='no pdf file here'), 404
 
+
 @app.errorhandler(db.FieldDoesNotExist)
 def handle_field_does_not_exist(error):
     return jsonify(error='unrecognized field'), 422
+
+
+@app.errorhandler(CertificateHostnameMismatch)
+def handle_certificate_hostname_mismatch(error):
+    return jsonify(errors=[{'field': 'url', 'message': 'the certificate presented by the server does not match the host ' + str(error.host)}]), 422
