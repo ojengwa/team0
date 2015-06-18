@@ -65,6 +65,8 @@ def get_files():
     if to_date is not None:
         files = files.filter(created_at__lte=datetime.strptime(to_date, '%d/%m/%Y'))
 
+    files = files.order_by('-created_at')
+
     return jsonify(files=[{'id': str(file.id),
                            'html_url': file.html_url,
                            'url': url_for('get_file', id=file.id, _external=True),
