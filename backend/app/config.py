@@ -13,3 +13,4 @@ MONGODB_SETTINGS = {
     'port': int(os.environ.get('ANDELA_PROJECT2_DB_PORT', 27017)),
     'read_preference': pymongo.read_preferences.ReadPreference.PRIMARY
 }
+

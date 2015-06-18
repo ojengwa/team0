@@ -1,12 +1,14 @@
-from datetime import datetime
+from datetime import datetime, date
 from httplib2 import ServerNotFoundError
 
-from flask import request, jsonify, url_for, make_response
+from flask import request, jsonify, url_for, make_response,json
 from pdfkit import from_url as pdf_from_url
+
+from time import clock
 
 from app import app
 from app import db
-from models import ConversionRequest, PDFFile
+from models import ConversionRequest, PDFFile, SearchRequest
 
 
 @app.route('/')
@@ -22,6 +24,8 @@ def files():
     conversion_request = ConversionRequest(**request.get_json())
     conversion_request.save()
 
+    initial_time = clock()
+
     pdf = PDFFile(html_url=conversion_request.url, owner=conversion_request.user_id)
     pdf.content.new_file()
     pdf.content.write(pdf_from_url(str(conversion_request.url), False))
@@ -30,7 +34,10 @@ def files():
 
     pdf.url = url_for('get_file', id=pdf.id, _external=True)
 
-    return jsonify(id=str(pdf.id), html_url=pdf.html_url, url=pdf.url, created_at=pdf.created_at.isoformat(), owner=pdf.owner), 201
+    final_time = clock() - initial_time
+
+    return jsonify(id=str(pdf.id), html_url=pdf.html_url, url=pdf.url, created_at=pdf.created_at.isoformat(), owner=pdf.owner,
+        final_time=str(final_time)), 201
 
 
 @app.route('/v1/files/<id>', methods=['GET'])
@@ -41,8 +48,32 @@ def get_file(id):
 
 
 def get_files():
-    pass
+    searchRequest = SearchRequest(owner=request.args.get('owner'), from_date=request.args.get('from_date'),
+        to_date=request.args.get('to_date'))
+    searchRequest.save()
 
+    history = []
+    user_name = searchRequest.owner
+    from_date = searchRequest.from_date
+    to_date = searchRequest.to_date
+
+    if to_date is not None and from_date is not None:
+        for pdfFile in PDFFile.objects(owner=user_name):
+            if pdfFile.created_at.date >= from_date.date and pdfFile.created_at.date <= to_date.date:
+                history.append(pdfFile)
+
+    elif to_date is not None and from_date is not None and user_name is None:
+        for pdfFile in PDFFile.objects():
+            history.append(pdfFile)
+
+    else:
+        for pdfFile in PDFFile.objects(owner=user_name):
+            history.append(pdfFile)
+
+    if history:
+        return jsonify(pdfFile = history), 200
+    else:
+        return "It is working"
 
 @app.errorhandler(db.ValidationError)
 def handle_validation_error(error):

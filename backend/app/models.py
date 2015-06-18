@@ -29,4 +29,5 @@ class ConversionRequest(db.Document):
 
 class SearchRequest(db.Document):
     owner = db.EmailField()
-    date_range = db.ListField(db.DateTimeField)
+    from_date = db.ListField(db.DateTimeField)
+    to_date = db.ListField(db.DateTimeField)
