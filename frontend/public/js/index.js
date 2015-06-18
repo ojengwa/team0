@@ -14,10 +14,6 @@ $(document).ready(function () {
       data.url = "http://" + data.url;
     }
 
-    // if (user != null) {
-    //   data["user_id"] = user.getBasicProfile().getEmail();
-    // }
-
     var user_id = localStorage.getItem('user_id');
     if (user !== null) {
       data["user_id"] = user_id;
