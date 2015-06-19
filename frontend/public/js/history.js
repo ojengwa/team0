@@ -14,7 +14,6 @@ $(document).ready(function () {
       }
     })
     .fail(function (xhr, statusText) {
-
     });
   }
 });

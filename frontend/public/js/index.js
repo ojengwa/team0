@@ -15,7 +15,7 @@ $(document).ready(function () {
     }
 
     var user_id = localStorage.getItem('user_id');
-    if (user !== null) {
+    if (user_id !== null) {
       data["user_id"] = user_id;
     }
 
