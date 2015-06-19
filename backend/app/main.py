@@ -103,4 +103,4 @@ def handle_certificate_hostname_mismatch(error):
 
 @app.errorhandler(IOError)
 def handle_io_error(error):
-    return jsonify(errors=[{'field': 'url', 'message': 'the document at this URL does not seem to be a web page'}])
+    return jsonify(errors=[{'field': 'url', 'message': 'the document at this URL does not seem to be a web page'}]), 422
