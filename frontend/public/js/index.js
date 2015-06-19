@@ -4,22 +4,10 @@ $(document).ready(function () {
   $("#submit").click(function (event) {
     event.preventDefault();
 
-    var $btn = $(this).button('loading');
-      
     clear();
+    var $btn = $(this).button('loading');
 
-    var data = {
-      url: $("#url").val()
-    };
-
-    if (!(data.url.startsWith('http://') || data.url.startsWith('https://'))) {
-      data.url = "http://" + data.url;
-    }
-
-    var user_id = localStorage.getItem('user_id');
-    if (user_id !== null) {
-      data["user_id"] = user_id;
-    }
+    var data = buildRequestData();
 
     $.ajax({
       type: "POST",
@@ -63,6 +51,23 @@ $(document).ready(function () {
     });
   });
 });
+
+var buildRequestData = function () {
+    var data = {
+      url: $("#url").val()
+    };
+
+    if (!(data.url.startsWith('http://') || data.url.startsWith('https://'))) {
+      data.url = "http://" + data.url;
+    }
+
+    var user_id = localStorage.getItem('user_id');
+    if (user_id !== null) {
+      data["user_id"] = user_id;
+    }
+
+    return data;
+};
 
 var displayPDF = function (url) {
   window.location.href = "pdf/web/viewer.html?file=" + encodeURIComponent(url);
