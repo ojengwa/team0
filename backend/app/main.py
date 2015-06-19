@@ -100,3 +100,7 @@ def handle_field_does_not_exist(error):
 @app.errorhandler(CertificateHostnameMismatch)
 def handle_certificate_hostname_mismatch(error):
     return jsonify(errors=[{'field': 'url', 'message': 'the certificate presented by the server does not match the host ' + str(error.host)}]), 422
+
+@app.errorhandler(IOError)
+def handle_io_error(error):
+    return jsonify(errors=[{'field': 'url', 'message': 'the document at this URL does not seem to be a web page'}])
