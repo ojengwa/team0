@@ -3,6 +3,8 @@ $(document).ready(function () {
 
   $("#submit").click(function (event) {
     event.preventDefault();
+
+    var $btn = $(this).button('loading');
       
     clear();
 
@@ -31,6 +33,8 @@ $(document).ready(function () {
       if (data.hasOwnProperty("url")) {
         displayPDF(data.url);
       }
+
+      $btn.button('reset');
     })
     .fail(function (xhr, statusText) {
       var response = xhr.responseJSON;
@@ -41,6 +45,8 @@ $(document).ready(function () {
 
         $("#urlForm").addClass("has-error");
         $("#urlLabel").text(message);
+
+        $btn.button('reset');
       }
     });
   });

@@ -2,6 +2,8 @@ $(document).ready(function () {
   var user_id = localStorage.getItem('user_id');
 
   if (user_id != null) {
+    $("#userEmail").text(user_id);
+
     $.ajax({
       type: "GET",
       url: "http://45.55.84.195/v1/files?owner=" + user_id,
