@@ -5,6 +5,10 @@ from app import db
 
 
 class PDFFile(db.Document):
+    """Represents a PDF file in the database.
+       A PDF object has an ID, the URL of the web page
+       from which it is generated, the URL at which this PDF
+       file can be downloaded, an owner and a creation date."""
     id = db.ObjectIdField(required=True)
     html_url = db.URLField()
     url = db.URLField()
@@ -14,6 +18,8 @@ class PDFFile(db.Document):
 
 
 class ConversionRequest(db.Document):
+    """Represents a request for converting a web page to a PDF file.
+       It contains the URL of the web page and an optional user ID."""
     id = db.ObjectIdField(required=True)
     user_id = db.EmailField()
     url = db.URLField(required=True)
@@ -25,9 +31,3 @@ class ConversionRequest(db.Document):
         (head, _) = (Http()).request(self.url, 'HEAD')
         if head.status >= 400:
             raise db.ValidationError('ValidationError', errors={'url': str(self.url) + ' is unreachable (status = ' + str(head.status) + ')'})
-
-
-class SearchRequest(db.Document):
-    owner = db.EmailField()
-    from_date = db.ListField(db.DateTimeField)
-    to_date = db.ListField(db.DateTimeField)
