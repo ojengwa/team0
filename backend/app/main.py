@@ -95,7 +95,7 @@ def handle_validation_error(error):
 
 @app.errorhandler(ServerNotFoundError)
 def handle_server_not_found_error(error):
-    """Returns a 422 HTTP response if the server at the URL specified in the request."""
+    """Returns a 422 HTTP response if the server at the URL specified in the request is not found."""
     return jsonify(errors=[{'field': 'url', 'message': error.message}]), 422
 
 
